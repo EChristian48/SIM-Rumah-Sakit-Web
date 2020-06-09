@@ -13,7 +13,7 @@ import {Router} from "./router.js";
 // import 'regenerator-runtime'
 
 const init = () => {
-  const splitSide = document.querySelector('#splitSide')
+  const splitSide = document.querySelector('#side')
   splitSide.setAttribute('collapse', '')
 }
 

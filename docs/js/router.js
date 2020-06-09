@@ -10,7 +10,13 @@ const Router = {
   },
 
   dashboard: function() {
-    // TODO: add dashboard init
+    const toolbarButton = document.querySelector('#toolbarButton')
+    const side = document.querySelector('#side')
+
+    side.setAttribute('swipeable', 'true')
+    toolbarButton.addEventListener('click', () => {
+      side.open()
+    })
   },
 
   login: function () {
