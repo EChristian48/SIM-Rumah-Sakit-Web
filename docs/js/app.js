@@ -7,7 +7,7 @@ import 'onsenui/css/onsen-css-components.css'
 // JS Imports
 import 'onsenui'
 import {avoidConsoleError} from './plugins.js'
-import {Router} from "./router.js";
+import {Initializer} from "./initializer.js";
 
 // Only use with Babel
 // import 'regenerator-runtime'
@@ -20,6 +20,6 @@ const init = () => {
 (async () => {
   avoidConsoleError()
   init()
-  Router.init()
+  Initializer.init()
 })()
 
