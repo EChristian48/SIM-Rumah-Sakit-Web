@@ -6,7 +6,12 @@
   height: 100%;
 }
 
-/* Colors */
 .u-full-max-width {
   max-width: 100%;
+}
+
+
+/* Colors */
+.grey-500 {
+  background-color: #9E9E9E !important;
 }

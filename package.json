@@ -19,6 +19,7 @@
   "license": "ISC",
   "dependencies": {
     "bootstrap": "^4.5.0",
+    "firebase": "^7.15.0",
     "onsenui": "^2.10.10",
     "regenerator-runtime": "^0.13.5"
   },

@@ -6,6 +6,8 @@ import 'onsenui/css/onsen-css-components.css'
 
 // JS Imports
 import 'onsenui'
+import * as firebase from "firebase";
+import {firebaseConfig} from "./config/firebase.js";
 import {avoidConsoleError} from './plugins.js'
 import {Initializer} from "./initializer.js";
 
@@ -15,6 +17,7 @@ import {Initializer} from "./initializer.js";
 const App = {
   init: async function () {
     avoidConsoleError()
+    firebase.initializeApp(firebaseConfig)
 
     this.nav = document.querySelector('#nav')
 
