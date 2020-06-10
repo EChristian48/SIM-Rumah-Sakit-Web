@@ -12,14 +12,19 @@ import {Initializer} from "./initializer.js";
 // Only use with Babel
 // import 'regenerator-runtime'
 
-const init = () => {
-  const splitSide = document.querySelector('#side')
-  splitSide.setAttribute('collapse', '')
+const App = {
+  init: async function () {
+    avoidConsoleError()
+
+    this.nav = document.querySelector('#nav')
+
+    const splitSide = document.querySelector('#side')
+    splitSide.setAttribute('collapse', '')
+
+    Initializer.init()
+  },
 }
 
-(async () => {
-  avoidConsoleError()
-  init()
-  Initializer.init()
-})()
+App.init()
 
+export {App}

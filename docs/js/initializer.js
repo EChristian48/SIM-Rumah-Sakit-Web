@@ -1,9 +1,9 @@
 import ons from 'onsenui'
+import {App} from "./app.js";
 
 const Initializer = {
   init: function () {
-    this.nav = document.querySelector('#nav')
-    this.nav.page = '../pages/login.html'
+    App.nav.page = '../pages/login.html'
     document.addEventListener('init', this.pageEventHandler)
     document.addEventListener('hide', this.pageEventHandler)
   },
@@ -30,14 +30,10 @@ const Initializer = {
   login_init: function () {
     const loginButton = document.querySelector('#loginButton')
     loginButton.addEventListener('click', async () => {
-      await Initializer.nav.pushPage('../pages/dashboard.html')
-      Initializer.nav.removePage(0)
+      await App.nav.pushPage('../pages/dashboard.html')
+      App.nav.removePage(0)
     })
   },
-}
-
-const DoctorRole = {
-
 }
 
 export {Initializer}
