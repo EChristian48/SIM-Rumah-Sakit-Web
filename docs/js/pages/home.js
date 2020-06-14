@@ -28,19 +28,24 @@ const homePage = {
     homePage.menuButton = document.querySelector('#menuButton')
     homePage.side = document.querySelector('#side')
     // Side content elements
+    // Universal (all role can access) menus
     homePage.sideList = await ons.createElement('../../pages/side.html')
-    homePage.logoutButton = homePage.sideList.querySelector('#logout')
     homePage.roleText = homePage.sideList.querySelector('#role')
+
+    homePage.aboutMenu = homePage.sideList.querySelector('#aboutMenu')
+    homePage.logoutMenu = homePage.sideList.querySelector('#logoutMenu')
+    homePage.homeMenu = homePage.sideList.querySelector('#homeMenu')
+    // Role-specific menus
+
 
     homePage.enableSide()
 
     homePage.menuButton.addEventListener('click', homePage.openSide)
-    homePage.logoutButton.addEventListener('click', homePage.logout)
+    homePage.logoutMenu.addEventListener('click', homePage.logout)
 
     console.log(homePage.roleText.innerText)
     console.log(homePage.sideList.querySelector('ons-list'))
     App.user.getIdTokenResult().then(r => console.log(r.claims.role))
-    console.log(App.nav.pages)
   },
 
   init_admin: function () {
