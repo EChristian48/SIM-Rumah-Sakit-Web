@@ -16,18 +16,36 @@ import {Initializer} from "./initializer.js";
 
 const App = {
   init: async function () {
+    // Plugins
     avoidConsoleError()
-    firebase.initializeApp(firebaseConfig)
 
-    this.nav = document.querySelector('#nav')
+    // Initialization for Firebase
+    App.firebaseApp = firebase.initializeApp(firebaseConfig)
+    App.initEmulator()
+
+    // Initialization for Onsen
+    App.nav = document.querySelector('#nav')
 
     const splitSide = document.querySelector('#side')
     splitSide.setAttribute('collapse', '')
 
     Initializer.init()
   },
-}
 
-App.init()
+  initEmulator: function () {
+    App.db = App.firebaseApp.firestore()
+    if (location.hostname === 'localhost') {
+      App.db.settings({
+        host: 'localhost:5002',
+        ssl: false,
+      })
+    }
+    firebase.functions().useFunctionsEmulator('http://localhost:5001')
+  }
+};
+
+(async () => {
+  await App.init()
+})()
 
 export {App}

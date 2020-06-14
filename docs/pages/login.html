@@ -1,15 +1,30 @@
 <ons-page id="login">
   <!-- Container -->
   <div class="d-flex flex-column flex-fill full-height justify-content-center">
+    <!-- Row -->
+    <div class="d-flex justify-content-center">
+      <!-- Column -->
+      <div class="d-flex flex-column">
+
+        <ons-button id="loginButton">Login with Google</ons-button>
+
+        <button id="pop">Populate</button>
+
+      </div>
+    </div>
+  </div>
+
+  <ons-modal>
+    <!-- Container -->
+    <div class="d-flex flex-column flex-fill full-height justify-content-center">
       <!-- Row -->
       <div class="d-flex justify-content-center">
         <!-- Column -->
         <div class="d-flex">
-          <ons-button id="loginButton">Login with Google</ons-button>
+          <ons-progress-circular indeterminate></ons-progress-circular>
         </div>
-
       </div>
-
-  </div>
-
+    </div>
+  </ons-modal>
 </ons-page>
+

@@ -9,7 +9,9 @@
   "scripts": {
     "dev": "webpack --config ./webpack.dev.js",
     "dev-server": "webpack-dev-server --config ./webpack.dev.js --open",
-    "build": "webpack --config ./webpack.prod.js"
+    "build": "webpack --config ./webpack.prod.js",
+    "watch": "webpack --config ./webpack.dev.js --watch",
+    "emulator": "firebase emulators:start"
   },
   "repository": {
     "type": "git",

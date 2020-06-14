@@ -1,10 +1,12 @@
-import ons from 'onsenui'
 import {App} from "./app.js";
+import {loginPage} from './pages/login.js'
+import {homePage} from './pages/home.js'
 
 const Initializer = {
   init: function () {
     App.nav.page = '../pages/login.html'
     document.addEventListener('init', this.pageEventHandler)
+    document.addEventListener('show', this.pageEventHandler)
     document.addEventListener('hide', this.pageEventHandler)
   },
 
@@ -14,26 +16,12 @@ const Initializer = {
         Initializer[`${event.target.id}_${event.type}`]()
   },
 
-  dashboard_init: async function () {
-    const toolbarButton = document.querySelector('#toolbarButton')
-    const side = document.querySelector('#side')
-    const sideList = await ons.createElement('../pages/side.html')
+  // Dashboard Event Handlers
+  home_init: homePage.init,
 
-    side.firstElementChild.lastElementChild.append(sideList)
-
-    side.setAttribute('swipeable', 'true')
-    toolbarButton.addEventListener('click', () => {
-      side.open()
-    })
-  },
-
-  login_init: function () {
-    const loginButton = document.querySelector('#loginButton')
-    loginButton.addEventListener('click', async () => {
-      await App.nav.pushPage('../pages/dashboard.html')
-      App.nav.removePage(0)
-    })
-  },
+  // Login Event Handlers
+  login_init: loginPage.init,
+  login_show: loginPage.show,
 }
 
 export {Initializer}
