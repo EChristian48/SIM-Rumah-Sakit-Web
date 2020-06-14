@@ -16,7 +16,7 @@ const Initializer = {
         Initializer[`${event.target.id}_${event.type}`]()
   },
 
-  // Dashboard Event Handlers
+  // Home Event Handlers
   home_init: homePage.init,
 
   // Login Event Handlers

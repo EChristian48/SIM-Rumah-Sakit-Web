@@ -3,14 +3,17 @@ import ons from 'onsenui'
 import {App} from "../app";
 
 const loginPage = {
+  // Show the loading modal
   showLoading: function () {
     loginPage.modal.show()
   },
 
+  // Hide the loading modal
   hideLoading: function () {
     loginPage.modal.hide()
   },
 
+  // Populate Firestore with dummy data
   pop: async function () {
     const roleRef = App.db.collection('roles')
     const dokRef = roleRef.doc('dokter')
@@ -35,12 +38,14 @@ const loginPage = {
     console.log('Bikin roles berhasil!')
   },
 
+  // Login using Google OAuth
   login: async function () {
     try {
       const provider = new firebase.auth.GoogleAuthProvider()
       loginPage.showLoading()
       await App.firebaseApp.auth().signInWithRedirect(provider)
     } catch (e) {
+      // Show failed trying to login alert
       await ons.notification.alert({
         title: `Error: ${e.code}`,
         message: e.message,
@@ -63,7 +68,7 @@ const loginPage = {
 
   show: async function () {
     loginPage.showLoading()
-    const redirectResult = await App.firebaseApp.auth().getRedirectResult()
+    await App.firebaseApp.auth().getRedirectResult()
 
     App.firebaseApp.auth().onAuthStateChanged(async (user) => {
       if (!user) {
@@ -71,8 +76,11 @@ const loginPage = {
         return
       }
 
+      // Save it to App instance
       App.user = user
 
+      // Get the user role
+      // If not found, the login process will fail
       const getRole = App.firebaseApp.functions().httpsCallable('getRole')
       try {
         await getRole({email: user.email})
@@ -80,6 +88,7 @@ const loginPage = {
         loginPage.hideLoading()
         App.firebaseApp.auth().signOut()
 
+        // Show failed to login alert
         await ons.notification.alert({
           title: `Gagal login: ${e.code}`,
           message: e.message
@@ -88,9 +97,7 @@ const loginPage = {
       }
 
       loginPage.hideLoading()
-
-      await App.nav.pushPage('../pages/home.html')
-      App.nav.removePage(0)
+      await App.nav.resetToPage('../../pages/home.html', {animation: 'lift'})
     })
   },
 }
