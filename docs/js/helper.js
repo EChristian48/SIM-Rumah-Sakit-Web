@@ -1,4 +1,7 @@
 // Avoid `console` errors in browsers that lack a console.
+import {homePage} from "./pages/home.js";
+import {App} from "./app";
+
 function avoidConsoleError() {
   let method;
   const noop = () => {}
@@ -21,4 +24,9 @@ function avoidConsoleError() {
   }
 }
 
-export {avoidConsoleError}
+async function openPage(page = 'home') {
+  homePage.side.close()
+  await App.nav.pushPage(`/pages/${page}.html`)
+}
+
+export {avoidConsoleError, openPage}

@@ -1,51 +1,57 @@
 import ons from "onsenui";
 import {App} from "../app.js";
+import {openPage} from "../helper.js";
 
 const homePage = {
-  openSide: function () {
-    homePage.side.open()
-  },
-
   logout: async function () {
     await App.firebaseApp.auth().signOut()
     homePage.disableSide()
-    await App.nav.resetToPage('../../pages/login.html', {animation: 'lift'})
+    await App.nav.resetToPage('/pages/login.html', {animation: 'lift'})
   },
 
+  // Side menu helper
+  openSide: function () {
+    homePage.side.open()
+  },
   enableSide: function () {
-    homePage.side.firstElementChild.lastElementChild.append(homePage.sideList)
+    homePage.side = document.querySelector('#side')
+    homePage.side.firstElementChild.lastElementChild.append(homePage.sideContent)
     homePage.side.setAttribute('swipeable', 'true')
   },
-
   disableSide: function () {
     homePage.side.close()
-    homePage.side.firstElementChild.lastElementChild.removeChild(homePage.sideList)
+    homePage.side.firstElementChild.lastElementChild.removeChild(homePage.sideContent)
     homePage.side.setAttribute('swipeable', 'false')
+  },
+  removeMenu: function (...elements) {
+    for (const element of elements) {
+      homePage.sideList.removeChild(element)
+    }
   },
 
   init: async function () {
-    // DOM elements
+    // This must go first before enableSide()
+    homePage.sideContent = await ons.createElement('/pages/side.html')
+    homePage.enableSide()
     homePage.menuButton = document.querySelector('#menuButton')
-    homePage.side = document.querySelector('#side')
+    homePage.menuButton.addEventListener('click', homePage.openSide)
+
     // Side content elements
     // Universal (all role can access) menus
-    homePage.sideList = await ons.createElement('../../pages/side.html')
-    homePage.roleText = homePage.sideList.querySelector('#role')
+    homePage.sideList = homePage.sideContent.querySelector('ons-list')
+    homePage.roleText = homePage.sideContent.querySelector('#role')
+    // Role-specific elements
+    // Assigning each menu content to this object
+    for (const child of homePage.sideList.children) {
+      if (child.id !== '')
+        homePage[child.id] = child
+    }
 
-    homePage.aboutMenu = homePage.sideList.querySelector('#aboutMenu')
-    homePage.logoutMenu = homePage.sideList.querySelector('#logoutMenu')
-    homePage.homeMenu = homePage.sideList.querySelector('#homeMenu')
-    // Role-specific menus
-
-
-    homePage.enableSide()
-
-    homePage.menuButton.addEventListener('click', homePage.openSide)
+    homePage.aboutMenu.addEventListener('click', () => openPage('about'))
     homePage.logoutMenu.addEventListener('click', homePage.logout)
 
-    console.log(homePage.roleText.innerText)
-    console.log(homePage.sideList.querySelector('ons-list'))
-    App.user.getIdTokenResult().then(r => console.log(r.claims.role))
+    // App.user.getIdTokenResult().then(r => console.log(r.claims.role))
+    console.log(homePage.sideList)
   },
 
   init_admin: function () {
@@ -53,12 +59,18 @@ const homePage = {
   },
   init_apoteker: function () {
     homePage.roleText.innerText = 'Apoteker'
+    homePage.removeMenu(
+      homePage.transaksiMenu,
+      homePage.dokterMenu,
+    )
   },
   init_dokter: function () {
     homePage.roleText.innerText = 'Dokter'
+    homePage.removeMenu(homePage.transaksiMenu)
   },
   init_kasir: function () {
     homePage.roleText.innerText = 'Kasir'
+    homePage.removeMenu(homePage.dokterMenu)
   },
 }
 

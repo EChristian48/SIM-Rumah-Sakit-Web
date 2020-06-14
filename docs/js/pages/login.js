@@ -1,6 +1,6 @@
 import * as firebase from "firebase";
 import ons from 'onsenui'
-import {App} from "../app";
+import {App} from "../app.js";
 
 const loginPage = {
   // Show the loading modal
@@ -97,7 +97,7 @@ const loginPage = {
       }
 
       loginPage.hideLoading()
-      await App.nav.resetToPage('../../pages/home.html', {animation: 'lift'})
+      await App.nav.resetToPage('/pages/home.html', {animation: 'lift'})
     })
   },
 }
