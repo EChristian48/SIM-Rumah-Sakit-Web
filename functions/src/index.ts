@@ -21,3 +21,7 @@ export const getRole = functions.https.onCall(async (data, context): Promise<voi
   const user = await app.auth().getUserByEmail(data.email)
   return app.auth().setCustomUserClaims(user.uid, {role: result.docs[0].id})
 })
+
+export const Test = functions.https.onCall((data, context) => {
+  return context.auth
+})

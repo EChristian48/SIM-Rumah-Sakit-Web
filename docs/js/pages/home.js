@@ -50,8 +50,9 @@ const homePage = {
     homePage.aboutMenu.addEventListener('click', () => openPage('about'))
     homePage.logoutMenu.addEventListener('click', homePage.logout)
 
-    // App.user.getIdTokenResult().then(r => console.log(r.claims.role))
-    console.log(homePage.sideList)
+    const userTokenResult = await App.user.getIdTokenResult()
+    const role = userTokenResult.claims.role
+    homePage[`init_${role}`]()
   },
 
   init_admin: function () {

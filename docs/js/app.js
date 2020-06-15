@@ -19,8 +19,10 @@ const App = {
     // Plugins
     avoidConsoleError()
 
-    // Initialization for Firebase
+    // Initialization for Firebase instance
     App.firebaseApp = firebase.initializeApp(firebaseConfig)
+
+    // Emulator Initialization !!DEV ONLY!!
     App.initEmulator()
 
     // Initialization for Onsen
