@@ -24,9 +24,4 @@ function avoidConsoleError() {
   }
 }
 
-async function openPage(page = 'home') {
-  homePage.side.close()
-  await App.nav.pushPage(`/pages/${page}.html`)
-}
-
-export {avoidConsoleError, openPage}
+export {avoidConsoleError}

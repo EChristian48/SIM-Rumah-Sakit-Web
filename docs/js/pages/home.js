@@ -1,73 +1,31 @@
-import ons from "onsenui";
 import {App} from "../app.js";
-import {openPage} from "../helper.js";
 
 const homePage = {
-  logout: async function () {
-    await App.firebaseApp.auth().signOut()
-    homePage.disableSide()
-    await App.nav.resetToPage('/pages/login.html', {animation: 'lift'})
-  },
-
-  // Side menu helper
-  openSide: function () {
-    homePage.side.open()
-  },
-  enableSide: function () {
-    homePage.side = document.querySelector('#side')
-    homePage.side.firstElementChild.lastElementChild.append(homePage.sideContent)
-    homePage.side.setAttribute('swipeable', 'true')
-  },
-  disableSide: function () {
-    homePage.side.close()
-    homePage.side.firstElementChild.lastElementChild.removeChild(homePage.sideContent)
-    homePage.side.setAttribute('swipeable', 'false')
-  },
-  removeMenu: function (...elements) {
-    for (const element of elements) {
-      homePage.sideList.removeChild(element)
-    }
-  },
-
   init: async function () {
-    // This must go first before enableSide()
-    homePage.sideContent = await ons.createElement('/pages/side.html')
-    homePage.enableSide()
+    await App.enableSide()
     homePage.menuButton = document.querySelector('#menuButton')
-    homePage.menuButton.addEventListener('click', homePage.openSide)
+    homePage.menuButton.addEventListener('click', App.openSide)
 
     // Side content elements
     // Universal (all role can access) menus
-    homePage.sideList = homePage.sideContent.querySelector('ons-list')
-    homePage.roleText = homePage.sideContent.querySelector('#role')
+    App.sideList = App.sideContent.querySelector('ons-list')
+    App.roleText = App.sideContent.querySelector('#role')
+
     // Role-specific elements
     // Assigning each menu content to this object
-    for (const child of homePage.sideList.children) {
+    for (const child of App.sideList.children) {
       if (child.id !== '')
-        homePage[child.id] = child
+        App[child.id] = child
     }
 
-    homePage.aboutMenu.addEventListener('click', () => openPage('about'))
-    homePage.logoutMenu.addEventListener('click', homePage.logout)
+    App.aboutMenu.addEventListener('click', () => App.openPage('about'))
+    App.logoutMenu.addEventListener('click', App.logout)
 
     const userTokenResult = await App.user.getIdTokenResult()
     App.user.role = userTokenResult.claims.role
 
-    homePage.roleText.innerText = App.user.role
-    homePage[`init_${App.user.role}`]()
-  },
-
-  init_admin: function () {
-    homePage.obatMenu.addEventListener('click', () => openPage('menu/obat'))
-  },
-  init_apoteker: function () {
-    homePage.removeMenu(homePage.transaksiMenu, homePage.dokterMenu)
-  },
-  init_dokter: function () {
-    homePage.removeMenu(homePage.transaksiMenu)
-  },
-  init_kasir: function () {
-    homePage.removeMenu(homePage.dokterMenu)
+    App.roleText.innerText = App.user.role
+    App[`init_${App.user.role}`]()
   },
 }
 

@@ -10,6 +10,7 @@ import * as firebase from "firebase";
 import {firebaseConfig} from "./config/firebase.js";
 import {avoidConsoleError} from './helper.js'
 import {Initializer} from "./initializer.js";
+import ons from "onsenui";
 
 // Only use with Babel
 // import 'regenerator-runtime'
@@ -43,7 +44,55 @@ const App = {
       })
     }
     firebase.functions().useFunctionsEmulator('http://localhost:5001')
-  }
+  },
+
+  logout: async function () {
+    await App.firebaseApp.auth().signOut()
+    App.disableSide()
+    await App.nav.resetToPage('/pages/login.html', {animation: 'lift'})
+  },
+
+  // Side menu helper
+  openSide: function () {
+    App.side.open()
+  },
+  enableSide: async function () {
+    App.side = document.querySelector('#side')
+    App.sideContent = await ons.createElement('/pages/side.html')
+    App.side.firstElementChild.lastElementChild.append(App.sideContent)
+    App.side.setAttribute('swipeable', 'true')
+  },
+  disableSide: function () {
+    App.side.close()
+    App.side.firstElementChild.lastElementChild.removeChild(App.sideContent)
+    App.side.setAttribute('swipeable', 'false')
+  },
+  removeMenu: function (...elements) {
+    for (const element of elements) {
+      App.sideList.removeChild(element)
+    }
+  },
+
+  // App initialization, called with homePage.init()
+  init_admin: function () {
+    App.obatMenu.addEventListener('click', () => openPage('menu/obat'))
+  },
+  init_apoteker: function () {
+    App.removeMenu(App.transaksiMenu, App.dokterMenu)
+  },
+  init_dokter: function () {
+    App.removeMenu(App.transaksiMenu)
+  },
+  init_kasir: function () {
+    App.removeMenu(App.dokterMenu)
+  },
+
+  // Helper methods
+  openPage: async function (page = 'home') {
+    App.side.close()
+    await App.nav.pushPage(`/pages/${page}.html`)
+  },
+
 };
 
 (async () => {
