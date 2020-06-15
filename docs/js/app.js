@@ -73,24 +73,14 @@ const App = {
     }
   },
 
-  // App initialization, called with homePage.init()
-  init_admin: function () {
-    App.obatMenu.addEventListener('click', () => openPage('menu/obat'))
-  },
-  init_apoteker: function () {
-    App.removeMenu(App.transaksiMenu, App.dokterMenu)
-  },
-  init_dokter: function () {
-    App.removeMenu(App.transaksiMenu)
-  },
-  init_kasir: function () {
-    App.removeMenu(App.dokterMenu)
-  },
-
-  // Helper methods
+  // Navigation methods
   openPage: async function (page = 'home') {
     App.side.close()
-    await App.nav.pushPage(`/pages/${page}.html`)
+    await App.nav.bringPageTop(`/pages/${page}.html`)
+  },
+  openHome: async function () {
+    App.side.close()
+    await App.nav.bringPageTop(`/pages/home.html`)
   },
 
 };

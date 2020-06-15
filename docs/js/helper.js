@@ -1,7 +1,4 @@
 // Avoid `console` errors in browsers that lack a console.
-import {homePage} from "./pages/home.js";
-import {App} from "./app";
-
 function avoidConsoleError() {
   let method;
   const noop = () => {}
