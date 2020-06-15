@@ -4,7 +4,7 @@ import {homePage} from './pages/home.js'
 
 const Initializer = {
   init: function () {
-    App.nav.page = '../pages/login.html'
+    App.nav.page = '/pages/login.html'
     document.addEventListener('init', this.pageEventHandler)
     document.addEventListener('show', this.pageEventHandler)
     document.addEventListener('hide', this.pageEventHandler)
@@ -16,12 +16,15 @@ const Initializer = {
         Initializer[`${event.target.id}_${event.type}`]()
   },
 
-  // Home Event Handlers
+  // Home handlers
   home_init: homePage.init,
 
-  // Login Event Handlers
+  // Login handlers
   login_init: loginPage.init,
   login_show: loginPage.show,
+
+  // Menu handlers
+
 }
 
 export {Initializer}

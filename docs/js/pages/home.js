@@ -51,26 +51,22 @@ const homePage = {
     homePage.logoutMenu.addEventListener('click', homePage.logout)
 
     const userTokenResult = await App.user.getIdTokenResult()
-    const role = userTokenResult.claims.role
-    homePage[`init_${role}`]()
+    App.user.role = userTokenResult.claims.role
+
+    homePage.roleText.innerText = App.user.role
+    homePage[`init_${App.user.role}`]()
   },
 
   init_admin: function () {
-    homePage.roleText.innerText = 'Admin'
+    homePage.obatMenu.addEventListener('click', () => openPage('menu/obat'))
   },
   init_apoteker: function () {
-    homePage.roleText.innerText = 'Apoteker'
-    homePage.removeMenu(
-      homePage.transaksiMenu,
-      homePage.dokterMenu,
-    )
+    homePage.removeMenu(homePage.transaksiMenu, homePage.dokterMenu)
   },
   init_dokter: function () {
-    homePage.roleText.innerText = 'Dokter'
     homePage.removeMenu(homePage.transaksiMenu)
   },
   init_kasir: function () {
-    homePage.roleText.innerText = 'Kasir'
     homePage.removeMenu(homePage.dokterMenu)
   },
 }

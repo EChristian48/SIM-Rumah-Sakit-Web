@@ -8,6 +8,8 @@ const app = admin.initializeApp({
 const db = app.firestore()
 
 export const getRole = functions.https.onCall(async (data, context): Promise<void> => {
+  // Kalo pake context.auth.token.email itu dapet error, possibly undefined
+  // Walau kita pake null coesadcasifnag operator juga, tetep jadi type string|undefined cannot be assigned to string
   const result = await db.collection('roles')
     .where('emails', 'array-contains', data.email)
     .get()
@@ -23,5 +25,5 @@ export const getRole = functions.https.onCall(async (data, context): Promise<voi
 })
 
 export const Test = functions.https.onCall((data, context) => {
-  return context.auth
+  return context.auth?.token.email
 })
