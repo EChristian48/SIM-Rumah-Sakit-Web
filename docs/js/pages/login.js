@@ -13,31 +13,6 @@ const loginPage = {
     loginPage.modal.hide()
   },
 
-  // Populate Firestore with dummy data
-  pop: async function () {
-    const roleRef = App.db.collection('roles')
-    const dokRef = roleRef.doc('dokter')
-    const apoRef = roleRef.doc('apoteker')
-    const kasRef = roleRef.doc('kasir')
-    const adRef = roleRef.doc('admin')
-
-    await Promise.all([
-      adRef.set({
-        emails: ['erickchristian48@gmail.com']
-      }),
-      apoRef.set({
-        emails: ['erickchristian48nomor2@gmail.com']
-      }),
-      dokRef.set({
-        emails: ['erickchristian48nomor3@gmail.com']
-      }),
-      kasRef.set({
-        emails: ['erickchristian48nomor4@gmail.com']
-      })
-    ])
-    console.log('Bikin roles berhasil!')
-  },
-
   // Login using Google OAuth
   login: async function () {
     try {
@@ -54,11 +29,6 @@ const loginPage = {
   },
 
   init: async function () {
-    // Populating the Firestore
-    // !!DEV ONLY!!
-    const popButton = document.querySelector('#pop')
-    popButton.addEventListener('click', loginPage.pop)
-
     // References to DOM elements
     loginPage.modal = document.querySelector('ons-modal')
     loginPage.loginButton = document.querySelector('#loginButton')
