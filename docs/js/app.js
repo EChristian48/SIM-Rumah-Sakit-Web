@@ -7,9 +7,9 @@ import 'onsenui/css/onsen-css-components.css'
 // JS Imports
 import 'onsenui'
 import * as firebase from "firebase";
-import {firebaseConfig} from "./config/firebase.js";
-import {avoidConsoleError} from './helper.js'
-import {Initializer} from "./initializer.js";
+import {firebaseConfig} from "./config/firebase";
+import {avoidConsoleError} from './helper'
+import {Initializer} from "./initializer";
 import ons from "onsenui";
 
 // Only use with Babel

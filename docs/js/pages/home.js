@@ -1,5 +1,5 @@
-import {App} from "../app.js";
-import {Initializer} from "../initializer.js";
+import {App} from "../app";
+import {Initializer} from "../initializer";
 
 const homePage = {
   init: async function () {

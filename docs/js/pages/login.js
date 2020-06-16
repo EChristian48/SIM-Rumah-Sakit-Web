@@ -1,6 +1,6 @@
 import * as firebase from "firebase";
 import ons from 'onsenui'
-import {App} from "../app.js";
+import {App} from "../app";
 
 const loginPage = {
   // Show the loading modal
