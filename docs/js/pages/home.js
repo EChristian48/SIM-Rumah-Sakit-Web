@@ -7,13 +7,6 @@ const homePage = {
     homePage.menuButton = document.querySelector('#home #menuButton')
     homePage.menuButton.addEventListener('click', App.openSide)
 
-    // Side content elements
-    // Universal (all role can access) menus
-    App.sideList = App.sideContent.querySelector('ons-list')
-    App.roleELement = App.sideContent.querySelector('#role')
-    App.userNameElement = App.sideContent.querySelector('#userName')
-    App.userImgElement = App.sideContent.querySelector('#userImg')
-
     // Role-specific elements
     // Assigning each menu content to this object
     for (const child of App.sideList.children) {
@@ -21,10 +14,12 @@ const homePage = {
         App[child.id] = child
     }
 
+    // Not role specific menu
     App.homeMenu.addEventListener('click', App.openHome)
     App.aboutMenu.addEventListener('click', () => App.openPage('about'))
     App.logoutMenu.addEventListener('click', App.logout)
 
+    // Init user profile
     const userTokenResult = await App.user.getIdTokenResult()
     App.user.role = userTokenResult.claims.role
     App.roleELement.innerText = App.user.role

@@ -61,16 +61,16 @@ const App = {
     App.sideContent = await ons.createElement('/pages/side.html')
     App.side.firstElementChild.lastElementChild.append(App.sideContent)
     App.side.setAttribute('swipeable', 'true')
+    // Just shortcuts
+    App.sideList = App.sideContent.querySelector('ons-list')
+    App.roleELement = App.sideContent.querySelector('#role')
+    App.userNameElement = App.sideContent.querySelector('#userName')
+    App.userImgElement = App.sideContent.querySelector('#userImg')
   },
   disableSide: function () {
     App.side.close()
     App.side.firstElementChild.lastElementChild.removeChild(App.sideContent)
     App.side.setAttribute('swipeable', 'false')
-  },
-  removeMenu: function (...elements) {
-    for (const element of elements) {
-      App.sideList.removeChild(element)
-    }
   },
 
   // Navigation methods

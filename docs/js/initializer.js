@@ -5,6 +5,7 @@ import {obatMenu} from "./pages/menu/obat.js";
 import {dokterMenu} from "./pages/menu/dokter";
 import {pasienMenu} from "./pages/menu/pasien";
 import {transaksiMenu} from "./pages/menu/transaksi";
+import {removeChildren} from "./helper";
 
 const Initializer = {
   init: function () {
@@ -47,7 +48,7 @@ const Initializer = {
     App.transaksiMenu.addEventListener('click', () => App.openPage('menu/transaksi'))
   },
   apoteker_role_init: function () {
-    App.removeMenu(App.transaksiMenu, App.dokterMenu)
+    removeChildren(App.sideList, App.transaksiMenu, App.dokterMenu)
   },
   dokter_role_init: function () {
     App.removeMenu(App.transaksiMenu)

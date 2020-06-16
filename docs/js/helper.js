@@ -1,7 +1,8 @@
 // Avoid `console` errors in browsers that lack a console.
 function avoidConsoleError() {
   let method;
-  const noop = () => {}
+  const noop = () => {
+  }
   const methods = [
     'assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error',
     'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log',
@@ -21,4 +22,10 @@ function avoidConsoleError() {
   }
 }
 
-export {avoidConsoleError}
+function removeChildren(parentElement, ...elements) {
+  for (const element of elements) {
+    parentElement.removeChild(element)
+  }
+}
+
+export {avoidConsoleError, removeChildren}
