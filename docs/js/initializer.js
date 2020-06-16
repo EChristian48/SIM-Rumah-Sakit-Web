@@ -1,11 +1,12 @@
 import {App} from "./app.js";
 import {loginPage} from './pages/login.js'
 import {homePage} from './pages/home.js'
-import {obatMenu} from "./pages/menu/obat.js";
+import {obatLanding} from "./pages/menu/obat.js";
 import {dokterMenu} from "./pages/menu/dokter";
 import {pasienMenu} from "./pages/menu/pasien";
 import {transaksiMenu} from "./pages/menu/transaksi";
 import {removeChildren} from "./helper";
+import {obatData} from "./pages/menu/obat";
 
 const Initializer = {
   init: function () {
@@ -17,9 +18,13 @@ const Initializer = {
   },
 
   pageEventHandler: function (event) {
-    if (event.target.id !== '')
-      if (Initializer[`${event.target.id}_${event.type}`] !== undefined)
+    if (event.target.id !== '') {
+      if (Initializer[`${event.target.id}_${event.type}`] !== undefined) {
         Initializer[`${event.target.id}_${event.type}`]()
+      } else {
+        console.warn('No initializer function found for:', event.target.id, event.type)
+      }
+    }
   },
 
   // Name of each handler must be: pageID_eventType
@@ -32,20 +37,21 @@ const Initializer = {
 
   // Menu handlers
   // Dokter
-  dokterMenu_init: dokterMenu.init,
+  dokterLanding_init: dokterMenu.init,
   // Obat
-  obatMenu_init: obatMenu.init,
+  obatLanding_init: obatLanding.init,
+  obatData_init: obatData.init,
   // Pasien
-  pasienMenu_init: pasienMenu.init,
+  pasienLanding_init: pasienMenu.init,
   // Transaksi
-  transaksiMenu_init: transaksiMenu.init,
+  transaksiLanding_init: transaksiMenu.init,
 
   // App initialization, called with homePage.init()
   admin_role_init: function () {
-    App.dokterMenu.addEventListener('click', () => App.openPage('menu/dokter'))
-    App.obatMenu.addEventListener('click', () => App.openPage('menu/obat'))
-    App.pasienMenu.addEventListener('click', () => App.openPage('menu/pasien'))
-    App.transaksiMenu.addEventListener('click', () => App.openPage('menu/transaksi'))
+    App.dokterMenu.addEventListener('click', () => App.openPage('menu/dokter/landing'))
+    App.obatMenu.addEventListener('click', () => App.openPage('menu/obat/landing'))
+    App.pasienMenu.addEventListener('click', () => App.openPage('menu/pasien/landing'))
+    App.transaksiMenu.addEventListener('click', () => App.openPage('menu/transaksi/landing'))
   },
   apoteker_role_init: function () {
     removeChildren(App.sideList, App.transaksiMenu, App.dokterMenu)
