@@ -2,6 +2,9 @@ import {App} from "./app.js";
 import {loginPage} from './pages/login.js'
 import {homePage} from './pages/home.js'
 import {obatMenu} from "./pages/menu/obat.js";
+import {dokterMenu} from "./pages/menu/dokter";
+import {pasienMenu} from "./pages/menu/pasien";
+import {transaksiMenu} from "./pages/menu/transaksi";
 
 const Initializer = {
   init: function () {
@@ -27,15 +30,21 @@ const Initializer = {
   login_show: loginPage.show,
 
   // Menu handlers
+  // Dokter
+  dokterMenu_init: dokterMenu.init,
   // Obat
   obatMenu_init: obatMenu.init,
+  // Pasien
+  pasienMenu_init: pasienMenu.init,
+  // Transaksi
+  transaksiMenu_init: transaksiMenu.init,
 
   // App initialization, called with homePage.init()
   admin_role_init: function () {
-    App.pasienMenu.addEventListener('click', () => App.openPage('menu/obat'))
+    App.dokterMenu.addEventListener('click', () => App.openPage('menu/dokter'))
     App.obatMenu.addEventListener('click', () => App.openPage('menu/obat'))
-    App.obatMenu.addEventListener('click', () => App.openPage('menu/obat'))
-    App.obatMenu.addEventListener('click', () => App.openPage('menu/obat'))
+    App.pasienMenu.addEventListener('click', () => App.openPage('menu/pasien'))
+    App.transaksiMenu.addEventListener('click', () => App.openPage('menu/transaksi'))
   },
   apoteker_role_init: function () {
     App.removeMenu(App.transaksiMenu, App.dokterMenu)
